@@ -1,5 +1,6 @@
 let ataqueJugador
 let varataqueEnemigo
+let resultado
 
 function iniciarjuego(){
     let btnMascotaJugador = document.getElementById('btn-seleccionar')
@@ -78,11 +79,39 @@ function ataqueEnemigo(){
     }else{
         varataqueEnemigo = 'TIERRA'
     }
+
+    combate()
+}
+ 
+ 
+function mensaje(resultado){
+
+    let sectionMensaje = document.getElementById('mensaje')
+
+    let texto = document.createElement('p')
+    texto.innerHTML='Tu mascota atacó con ' + ataqueJugador + ', la mascota del enemigo atacó con ' +  varataqueEnemigo + ' - ' + resultado
+
+    sectionMensaje.appendChild(texto)
 }
 
 function aleatorio(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
+
+function combate(){
+    if (varataqueEnemigo == ataqueJugador) {
+        mensaje("EMPATE")
+    } else if (ataqueJugador == 'FUEGO' && varataqueEnemigo == 'TIERRA') {
+        mensaje("GANASTE")
+    } else if (ataqueJugador == 'AGUA' && varataqueEnemigo == 'FUEGO') {
+        mensaje("GANASTE")
+    } else if (ataqueJugador == 'TIERRA' && varataqueEnemigo == 'AGUA') {
+        mensaje("GANASTE")
+    } else {
+        mensaje("PERDISTE")
+    }
+}
+
 
 
 window.addEventListener('load', iniciarjuego)
