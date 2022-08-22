@@ -1,0 +1,34 @@
+/*
+
+# es para id  
+. para clase
+
+*/
+
+.titulo{
+    color: lightblue;
+    width: 310px;
+    height: 50px;
+    background-color: teal;
+}
+
+#seleccionar-mascota{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tarjeta-mokepon{
+    width: 100px;
+    height: 100px;
+    background-color: aquamarine;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 10px;
+    border: 1px solid hotpink;
+}
+
+input{
+    display: none;
+}
