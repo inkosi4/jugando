@@ -5,6 +5,7 @@
         <title>MOKEPON</title>
         <script src="./js/script.js"></script>
         <link rel="stylesheet" href="./css/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
         
@@ -33,26 +34,43 @@
         </section>
 
         <section id="seleccionar-ataque">
-            <h1 class="titulo">💧🔥🌱 MOKEPON 💧🔥🌱</h1>
-            <h2>Elige a tu ataque:</h2>
+                <h1 class="titulo">💧🔥🌱 MOKEPON 💧🔥🌱</h1>
+                <h2 class="subtitulo">Elige a tu ataque:</h2>
+            <div class="tarjetas-ataques">
+                <button id="btn-fuego" class="btn-ataque">Fuego 🔥</button>
+                <button id="btn-agua" class="btn-ataque">Agua 💧</button>
+                <button id="btn-tierra" class="btn-ataque">Tierra 🌱</button>
+            </div>
 
-            <p>Tu mascota <span id="mascota-jugador"></span> tiene <span id="vida-jugador">3</span> vidas</p>
-            <p>La mascota <span id="mascota-enemigo"></span> del enemigo tiene <span id="vida-enemigo">3</span> vidas</p>
-            
-            <p>
-                <button id="btn-fuego">Fuego 🔥</button>
-                <button id="btn-agua">Agua 💧</button>
-                <button id="btn-tierra">Tierra 🌱</button>
-            </p>
+           
+                <div id="mensajes">
+                    <p id="resultadoSuerte">Suerte!!!</p>
+                
+                    <section id="reiniciar">
+                        <button id="btn-reiniciar">Reiniciar</button>
+                    </section>
+                
+                </div>
+        
+               
+           
+
+            <div class="ataques">
+                <div class="ataques-jugador">
+                    <p id="vida-jugador">3</p>
+                    <p id="mascota-jugador"></p>
+                    <div id="ataque-de-Jugador"></div>
+                </div>
+                <div class="ataques-enemigo">
+                    <p id="vida-enemigo">3</p>
+                    <p id="mascota-enemigo"></p>
+                    <div id="ataque-de-Enemigo"></div>
+                </div>
+            </div>
+
         </section>
 
-        <section id="mensaje">
-            
-        </section>
-
-        <section id="reiniciar">
-            <button id="btn-reiniciar">Reiniciar</button>
-        </section>
+       
         
     </body>
     

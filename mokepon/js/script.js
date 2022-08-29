@@ -32,7 +32,7 @@ function seleccionarMascotaJugador(){
     sectionSeleccionarMascota.style.display = 'none'
 
     let sectionSeleccionarAtaque = document.getElementById('seleccionar-ataque')
-    sectionSeleccionarAtaque.style.display = 'block'
+    sectionSeleccionarAtaque.style.display = 'flex'
 
 
     let hipodoge = document.getElementById('hipodoge')
@@ -104,22 +104,28 @@ function ataqueEnemigo(){
  
 function mensaje(resultado){
 
-    let sectionMensaje = document.getElementById('mensaje')
+    let sectionMensaje = document.getElementById('resultadoSuerte')
+    let ataquedeJugador = document.getElementById('ataque-de-Jugador')
+    let ataquedeEnemigo = document.getElementById('ataque-de-Enemigo')
 
-    let texto = document.createElement('p')
-    texto.innerHTML='Tu mascota atacó con ' + ataqueJugador + ', la mascota del enemigo atacó con ' +  varataqueEnemigo + ' - ' + resultado
+    
+    let nuevoAtaqueJugador = document.createElement('p')
+    let nuevoAtaqueEnemigo = document.createElement('p')
+    
+    sectionMensaje.innerHTML = resultado
+    nuevoAtaqueJugador.innerHTML = ataqueJugador
+    nuevoAtaqueEnemigo.innerHTML = varataqueEnemigo
 
-    sectionMensaje.appendChild(texto)
+    ataquedeJugador.appendChild(nuevoAtaqueJugador)
+    ataquedeEnemigo.appendChild(nuevoAtaqueEnemigo)
 }
 
 function mensajeResultado(resultadoFinal){
 
-    let sectionMensaje = document.getElementById('mensaje')
+    let sectionMensaje = document.getElementById('resultadoSuerte')
 
-    let texto = document.createElement('p')
-    texto.innerHTML= resultadoFinal
+    sectionMensaje.innerHTML= resultadoFinal
 
-    sectionMensaje.appendChild(texto)
 
     let btnFuego = document.getElementById('btn-fuego')
     btnFuego.disabled = true
