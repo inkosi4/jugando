@@ -10,9 +10,7 @@ const btnReiniciar = document.getElementById('btn-reiniciar')
 //seleccionarMascotaJugador
 const sectionSeleccionarMascota = document.getElementById('seleccionar-mascota')
 //let sectionSeleccionarAtaque = document.getElementById('seleccionar-ataque')
-const hipodoge = document.getElementById('hipodoge')
-const capipepo = document.getElementById('capipepo') 
-const ratigueya = document.getElementById('ratigueya') 
+
 const mascotaJugador = document.getElementById('mascota-jugador')
 
 //seleccionarMascotaEnemigo
@@ -29,6 +27,10 @@ const ataquedeEnemigo = document.getElementById('ataque-de-Enemigo')
 const nuevoAtaqueJugador = document.createElement('p')
 const nuevoAtaqueEnemigo = document.createElement('p')
 
+
+const contenedorTarjetas = document.getElementById('contenedorTarjetas')
+
+
 //mensajeResultado
 //let sectionMensaje = document.getElementById('resultadoSuerte')
 //let btnFuego = document.getElementById('btn-fuego')
@@ -36,12 +38,15 @@ const nuevoAtaqueEnemigo = document.createElement('p')
 //let btnTierra = document.getElementById('btn-tierra')
 //let sectionReiniciar = document.getElementById('reiniciar')
 
-let mokepones = []
-
 let ataqueJugador
 let varataqueEnemigo
+let hipodoge
+let capipepo 
+let ratigueya
 let vidaJugador = 3
 let vidaEnemigo = 3
+
+let mokepones = []
 
 class Mokepon{
     constructor(nombre, foto, vida){
@@ -80,11 +85,29 @@ mokeponratigueya.ataques.push(
     {nombreAtaq: 'tierra', idAtaq: 'btn-tierra'}
 )
 
+mokepones.push(mokeponhipodoge,mokeponcapipepo,mokeponratigueya)
 
 
 function iniciarjuego(){
 
     sectionSeleccionarAtaque.style.display = 'none'
+
+    mokepones.forEach((newmokepon) => {
+        opcionMokepones = `
+        <input type="radio" name="mascota" id=${newmokepon.nombre} />
+        <label class="tarjeta-mokepon" for=${newmokepon.nombre}>
+            <p>${newmokepon.nombre}</p>
+            <img src=${newmokepon.foto} alt=${newmokepon.nombre}>
+        </label>
+        `
+        contenedorTarjetas.innerHTML += opcionMokepones
+
+        hipodoge = document.getElementById('Hipodoge')
+        capipepo = document.getElementById('Capipepo') 
+        ratigueya = document.getElementById('Ratigueya') 
+
+    })
+
     sectionReiniciar.style.display = 'none'
     btnMascotaJugador.addEventListener('click', seleccionarMascotaJugador)
     btnFuego.addEventListener('click',ataqueFuego)
@@ -100,16 +123,13 @@ function seleccionarMascotaJugador(){
     sectionSeleccionarAtaque.style.display = 'flex'
     
     if(hipodoge.checked){
-        //alert('Mascota seleccionada: hipodoge')
-        mascotaJugador.innerHTML = 'Hipodoge'
+        mascotaJugador.innerHTML =  hipodoge.id
     }
     else if(capipepo.checked){
-        //alert('Mascota seleccionada: capipepo')
-        mascotaJugador.innerHTML = 'Capipepo'
+        mascotaJugador.innerHTML = capipepo.id
     }
     else if(ratigueya.checked){
-       // alert('Mascota seleccionada: ratigueya')
-        mascotaJugador.innerHTML = 'Ratigueya'
+        mascotaJugador.innerHTML = ratigueya.id
     }
     else{
         alert('No ha seleccionado una mascota.')
