@@ -63,6 +63,9 @@ input{
     display: none;
 }
 
+input:checked + label{
+    background-color: lightseagreen;
+}
 
 #seleccionar-ataque{
     flex-direction: column;
