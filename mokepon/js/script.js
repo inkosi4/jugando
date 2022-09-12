@@ -59,12 +59,27 @@ let vidaEnemigo = 3
 
 let mokepones = []
 
+//mapa
+
+const sectionVerMapa = document.getElementById('ver-mapa')
+const mapa = document.getElementById('mapa')
+let lienzo = mapa.getContext("2d")
+let intervalo
+
 class Mokepon{
     constructor(nombre, foto, vida){
         this.nombre = nombre
         this.foto = foto
         this.vida = vida
         this.ataques = []
+        this.x = 20
+        this.y = 30
+        this.ancho = 80
+        this.alto = 80
+        this.mapaFoto = new Image()
+        this.mapaFoto.src = foto
+        this.velocidadX = 0
+        this.velocidadY = 0
     }
 }
 
@@ -102,6 +117,7 @@ mokepones.push(mokeponhipodoge,mokeponcapipepo,mokeponratigueya)
 function iniciarjuego(){
 
     sectionSeleccionarAtaque.style.display = 'none'
+    sectionVerMapa.style.display = 'none'
 
     mokepones.forEach((newmokepon) => {
         opcionMokepones = `
@@ -128,10 +144,12 @@ function iniciarjuego(){
 function seleccionarMascotaJugador(){
         
     sectionSeleccionarMascota.style.display = 'none'
-    sectionSeleccionarAtaque.style.display = 'flex'
+    //sectionSeleccionarAtaque.style.display = 'flex'
     
+    sectionVerMapa.style.display = 'flex'
     
-
+    iniciarMapa()
+    
 
     if(hipodoge.checked){
         mascotaJugador.innerHTML =  hipodoge.id
@@ -335,5 +353,69 @@ function reiniciarJuego(){
 function aleatorio(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
+
+function pintaPersonaje(){
+    mokeponcapipepo.x = mokeponcapipepo.x + mokeponcapipepo.velocidadX
+    mokeponcapipepo.y = mokeponcapipepo.y + mokeponcapipepo.velocidadY
+    lienzo.clearRect(0,0,mapa.width, mapa.height)
+    lienzo.drawImage(
+        mokeponcapipepo.mapaFoto,
+        mokeponcapipepo.x,
+        mokeponcapipepo.y,
+        mokeponcapipepo.ancho,
+        mokeponcapipepo.alto
+    )
+    
+}
+
+function moverDerecha(){
+    mokeponcapipepo.velocidadX = 5
+    
+}
+
+function moverIzquierda(){
+    mokeponcapipepo.velocidadX = -5
+}
+
+function moverAbajo(){
+    mokeponcapipepo.velocidadY = 5
+}
+
+function moverArriba(){
+    mokeponcapipepo.velocidadY = -5
+}
+
+function detener(){
+    mokeponcapipepo.velocidadX = 0
+    mokeponcapipepo.velocidadY = 0
+}
+
+function presionLetra(event){
+    switch(event.key){
+        case 'ArrowUp':
+            moverArriba()
+            break
+        case 'ArrowDown':
+            moverAbajo()
+            break
+        case 'ArrowLeft':
+            moverIzquierda()
+            break
+        case 'ArrowRight':
+            moverDerecha()
+            break
+        default:
+            break
+    }
+}
+
+function iniciarMapa(){
+    intervalo = setInterval(pintaPersonaje, 50)
+
+    window.addEventListener('keydown', presionLetra)
+
+    window.addEventListener('keyup', detener)
+}
+
 
 window.addEventListener('load', iniciarjuego)
