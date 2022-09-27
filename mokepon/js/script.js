@@ -1,3 +1,5 @@
+//const { json } = require("express")
+
 //iniciarjuego
 const sectionSeleccionarAtaque = document.getElementById('seleccionar-ataque')
 const sectionReiniciar = document.getElementById('reiniciar')
@@ -59,6 +61,9 @@ let vidaJugador = 3
 let vidaEnemigo = 3
 
 let mokepones = []
+
+//Para enviar datos al backend
+let jugadorid = null
 
 //mapa
 
@@ -197,6 +202,21 @@ function iniciarjuego(){
     btnMascotaJugador.addEventListener('click', seleccionarMascotaJugador)
     btnReiniciar.addEventListener('click', reiniciarJuego)
 
+    unirseJuego()
+
+}
+
+function unirseJuego(){
+    fetch("http://localhost:8080/unirse").then(function(res){
+        //console.log(res)
+        if(res.ok){
+            res.text().then(function(respuesta){
+                console.log(respuesta)
+                jugadorid = respuesta
+            })
+        }
+    })
+
 }
 
 function seleccionarMascotaJugador(){
@@ -218,11 +238,27 @@ function seleccionarMascotaJugador(){
     else{
         alert('No ha seleccionado una mascota.')
     }
+
+    seleccionarMokepon(mascotadeJugador) //Para enviar el dato al backend
+
+
     extraerAtaques(mascotadeJugador)
 
     sectionVerMapa.style.display = 'flex'
     iniciarMapa()
     
+}
+
+function seleccionarMokepon(mascotaJug){
+    fetch(`http://localhost:8080/mokepon/${jugadorid}`,{
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            mokepon: mascotaJug //Esta variable se pasa al backend para el nombre del mokepon
+        })
+    })
 }
 
 function extraerAtaques(mascotadeJugador){
