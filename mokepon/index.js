@@ -1,8 +1,11 @@
+//Comando de instalación: npm install cors
 const express = require("express") //Importa librería
+const cors = require("cors") // Importa librería para solucionar errores de acceso Control Origin
 const app = express() // Inicia la conexión
 
-//Comando de instalación: npm install cors
-const cors = require("cors") // Importa librería para solucionar errores de acceso Control Origin
+
+//archivos estaticos
+app.use(express.static('public'))
 app.use(cors())
 app.use(express.json())
 
@@ -20,6 +23,15 @@ class Jugador {
     asignarMokepon(mokepon){
         this.mokepon = mokepon
     }
+
+    actualizarPosicion(x,y){
+        this.x = x
+        this.y = y
+    }
+
+    asignarAtaques(ataques){
+        this.ataques = ataques
+    }
 }
 
 
@@ -32,6 +44,7 @@ class Mokepon {
     constructor(nombre){
         this.nombre = nombre
     }
+    
 }
 
 
@@ -49,7 +62,7 @@ app.get("/unirse", (req, rest) => {
     rest.send(id) //Identificador de jugador
 })
 
-//
+// end point
 app.post("/mokepon/:jugadorid", (req,res) =>{
     
     //Obtiene información de la url
@@ -70,6 +83,52 @@ app.post("/mokepon/:jugadorid", (req,res) =>{
 
     res.end()
 })
+
+app.post("/mokepon/:jugadorid/posicion", (req, res) =>{
+    const jugadorid = req.params.jugadorid || ""
+
+    const x = req.body.x || ""
+    const y = req.body.y || ""
+
+    //Acceder al jugador
+    const jugadorIndex = jugadores.findIndex((jugador) => jugadorid === jugador.id)
+    if(jugadorIndex >= 0){
+        jugadores[jugadorIndex].actualizarPosicion(x,y)
+    }
+
+    //Filtrar jugadores menos el de consulta
+    const enemigos = jugadores.filter((jugador) => jugadorid !== jugador.id)
+
+    res.send({
+        enemigos
+    })
+})
+
+//Ataques
+app.post("/mokepon/:jugadorid/ataques", (req,res) =>{
+    
+    //Obtiene información de la url
+    const jugadorid = req.params.jugadorid || ""
+    const ataques = req.body.ataques || [] //Vacío
+        
+    const jugadorIndex = jugadores.findIndex((jugador) => jugadorid === jugador.id)
+    
+    if(jugadorIndex >= 0){
+        jugadores[jugadorIndex].asignarAtaques(ataques)
+    }
+
+    res.end()
+})
+
+app.get("/mokepon/:jugadorid/ataques", (req, res) => {
+    const jugadorid = req.params.jugadorid || ""
+    const jugador = jugadores.find((jugador) => jugador.id === jugadorid)
+
+    res.send({
+        ataques: jugador.ataques || []
+    })
+})
+
 
 //Se indica el puerto
 app.listen(8080, () => { 
